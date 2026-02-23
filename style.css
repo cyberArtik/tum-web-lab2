@@ -1,1 +1,45 @@
-/* add your CSS here */
+/* variables and all the information from the figma, features, optimization for scalability */
+
+:root {
+    --c-deep:       #4a3341;
+    --c-mid:        #6d4d6e;
+    --c-purple:     #7e6991;
+    --c-muted:      #a3a4be;
+    --c-soft:       #e0e6e9;
+    --c-cream:      #f5f2f0;
+    --c-white:      #fff;
+    --c-dark:       #2a1e28;
+    --c-text:       #3a2e38;
+    --c-text-light: #8a7e88;
+
+    --font-serif: 'Cormorant Garamond', Georgia, serif;
+    --font-sans:  'Inter', system-ui, sans-serif;
+
+    --radius:    14px;
+    --radius-sm: 8px;
+    --shadow:    0 4px 24px rgba(74, 51, 65, .10);
+    --shadow-lg: 0 12px 48px rgba(74, 51, 65, .14);
+    --transition: .3s cubic-bezier(.4, 0, .2, 1);
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 78px;
+}
+
+body {
+    font-family: var(--font-sans);
+    color: var(--c-text);
+    background: var(--c-cream);
+    line-height: 1.65;
+}
+
+img { max-width: 100%; display: block; }
+a   { color: inherit; text-decoration: none; }
+ul  { list-style: none; }
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
