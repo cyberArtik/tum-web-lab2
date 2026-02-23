@@ -1,10 +1,4 @@
 <!DOCTYPE html>
-<!--
-  =============================================
-  CONTRIBUTION #1 — Project setup
-  Files touched: index.html (skeleton), reset.css, style.css (variables + base)
-  =============================================
--->
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -19,6 +13,27 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+   <!--
+      + header and navigation
+    -->
+    <header class="header" id="header">
+        <div class="container">
+            <nav class="nav">
+                <input type="checkbox" id="nav-toggle" class="nav__toggle">
+                <a href="#hero" class="nav__logo">Europe<span>Trans</span></a>
+                <label for="nav-toggle" class="nav__hamburger" aria-label="Меню">
+                    <span></span><span></span><span></span>
+                </label>
+                <ul class="nav__menu">
+                    <li><a href="#hero"        class="nav__link">Главная</a></li>
+                    <li><a href="#about"       class="nav__link">Обо мне</a></li>
+                    <li><a href="#services"    class="nav__link">Услуги</a></li>
+                    <li><a href="#citizenship" class="nav__link">Гражданство БГ</a></li>
+                    <li><a href="#contact"     class="nav__link nav__link--cta">Связаться</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
 </body>
 </html>
