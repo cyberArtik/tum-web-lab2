@@ -368,7 +368,6 @@ ul  { list-style: none; }
     font-weight: 500;
 }
 
-
 /* SERVICES */
 
 .services__grid {
@@ -514,5 +513,73 @@ ul  { list-style: none; }
     color: var(--c-text-light);
     font-size: .92rem;
     line-height: 1.7;
+}
+
+/* Process and testimonials */
+.proc__row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.proc {
+    padding: 36px 28px;
+    border-radius: var(--radius);
+    background: var(--c-white);
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+.proc:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+
+.proc__num {
+    display: block;
+    font-family: var(--font-serif);
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: rgba(109, 77, 110, .12);
+    line-height: 1;
+    margin-bottom: 8px;
+}
+.proc h4 { font-size: .97rem; font-weight: 700; color: var(--c-deep); margin-bottom: 6px; }
+.proc p  { font-size: .85rem; color: var(--c-text-light); line-height: 1.6; }
+
+/* reviews */
+.revs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.rev {
+    padding: 36px 32px;
+    border-radius: var(--radius);
+    background: var(--c-white);
+    box-shadow: var(--shadow);
+    position: relative;
+    transition: var(--transition);
+}
+.rev:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+
+.rev::before {
+    content: '\201C';
+    font-family: var(--font-serif);
+    font-size: 4rem;
+    color: rgba(109, 77, 110, .09);
+    position: absolute;
+    top: 8px; left: 18px;
+    line-height: 1;
+}
+.rev blockquote {
+    font-size: .93rem;
+    color: var(--c-text);
+    line-height: 1.7;
+    margin-bottom: 14px;
+    font-style: italic;
+}
+.rev cite {
+    font-size: .82rem;
+    color: var(--c-mid);
+    font-style: normal;
+    font-weight: 600;
 }
 
