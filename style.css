@@ -44,7 +44,6 @@ ul  { list-style: none; }
     padding: 0 24px;
 }
 
-
 /* header */
 
 .header {
@@ -368,3 +367,37 @@ ul  { list-style: none; }
     font-size: .82rem;
     font-weight: 500;
 }
+
+
+/* SERVICES */
+
+.services__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.dcard {
+    padding: 32px 28px;
+    border-radius: var(--radius);
+    background: rgba(255,255,255,.07);
+    border: 1px solid rgba(255,255,255,.10);
+    transition: var(--transition);
+}
+.dcard:hover {
+    background: rgba(255,255,255,.12);
+    transform: translateY(-4px);
+    border-color: rgba(255,255,255,.22);
+}
+.dcard i  { font-size: 1.6rem; color: var(--c-soft); margin-bottom: 14px; }
+.dcard h3 { font-size: 1rem; font-weight: 700; color: var(--c-white); margin-bottom: 8px; }
+.dcard p  { font-size: .85rem; color: var(--c-muted); line-height: 1.6; }
+
+.dcard--cta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background: rgba(255,255,255,.13);
+    border-color: rgba(255,255,255,.22);
+}
+.dcard--cta .btn { margin-top: 16px; }
