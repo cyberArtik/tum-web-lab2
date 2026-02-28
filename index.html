@@ -279,5 +279,93 @@
         </div>
     </section>
 
+    <!-- Contact and footer section -->
+  <section class="section section--dark" id="contact">
+        <div class="container">
+            <div class="section__header">
+                <span class="section__tag section__tag--light">Свяжитесь со мной</span>
+                <h2 class="section__title section__title--light">Контакты</h2>
+            </div>
+            <div class="contact__grid">
+                <form class="contact-form" action="#" method="post" novalidate>
+                    <div class="form__row">
+                        <div class="form__group">
+                            <label for="cName">Ваше имя *</label>
+                            <input type="text" id="cName" name="name" placeholder="Иван Иванов" required>
+                        </div>
+                        <div class="form__group">
+                            <label for="cEmail">Email *</label>
+                            <input type="email" id="cEmail" name="email" placeholder="ivan@example.com" required>
+                        </div>
+                    </div>
+                    <div class="form__group">
+                        <label for="cSubject">Тема обращения</label>
+                        <select id="cSubject" name="subject">
+                            <option value="">Выберите тему...</option>
+                            <option value="personal">Перевод документов</option>
+                            <option value="oral">Устный перевод</option>
+                            <option value="citizenship">Болгарское гражданство</option>
+                            <option value="other">Другое</option>
+                        </select>
+                    </div>
+                    <div class="form__group">
+                        <label for="cMsg">Сообщение *</label>
+                        <textarea id="cMsg" name="message" rows="4" placeholder="Опишите ваш запрос..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn--light btn--block">Отправить сообщение</button>
+                </form>
+                <div class="contact__info">
+                    <div class="ci">
+                        <i class="fas fa-phone-alt"></i>
+                        <div>
+                            <strong>Телефон</strong>
+                            <a href="tel:+380675009098">+380 67 500 90 98</a>
+                        </div>
+                    </div>
+                    <div class="ci">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <strong>Email</strong>
+                            <a href="mailto:info@europe-trans.net">info@europe-trans.net</a>
+                        </div>
+                    </div>
+                    <div class="ci">
+                        <i class="fas fa-globe"></i>
+                        <div>
+                            <strong>Вебсайт</strong>
+                            <a href="https://www.europe-trans.net" target="_blank">europe-trans.net</a>
+                        </div>
+                    </div>
+                    <div class="ci">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <strong>Расположение</strong>
+                            <span>Республика Молдова</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__row">
+                <div class="footer__brand">
+                    <a href="#hero" class="nav__logo">Europe<span>Trans</span></a>
+                    <p>Профессиональные переводы на румынский, болгарский и русский языки. 22+ лет опыта.</p>
+                </div>
+                <div class="footer__links">
+                    <a href="tel:+380675009098"><i class="fas fa-phone-alt"></i> +380 67 500 90 98</a>
+                    <a href="mailto:info@europe-trans.net"><i class="fas fa-envelope"></i> info@europe-trans.net</a>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <p>&copy; 2008–2025 EuropeTrans. Все права защищены.</p>
+                <p class="footer__legal">Деятельность осуществляется в соответствии с Законом №264 от 11.12.2008 г. Республики Молдова</p>
+            </div>
+        </div>
+    </footer>
+
 </body>
 </html>
