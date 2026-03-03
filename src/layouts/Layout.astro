@@ -1,0 +1,60 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import MobileCta from '../components/MobileCta.astro';
+import Mascot from '../components/Mascot.astro';
+
+import '../styles/reset.css';
+import '../styles/style.css';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{title}</title>
+    <meta name="description" content={description}>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script is:inline>
+      tailwind.config = {
+        prefix: 'tw-',
+        corePlugins: { preflight: false },
+        theme: {
+          extend: {
+            colors: {
+              deep:    '#4a3341',
+              mid:     '#6d4d6e',
+              purple:  '#7e6991',
+              muted:   '#a3a4be',
+              soft:    '#e0e6e9',
+              cream:   '#f5f2f0',
+            },
+            fontFamily: {
+              serif: ['Cormorant Garamond', 'Georgia', 'serif'],
+              sans:  ['Inter', 'system-ui', 'sans-serif'],
+            },
+          },
+        },
+      }
+    </script>
+</head>
+<body>
+    <Header />
+    <slot />
+    <Footer />
+    <MobileCta />
+    <Mascot />
+</body>
+</html>
