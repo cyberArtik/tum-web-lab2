@@ -1,0 +1,67 @@
+---
+const subjects = [
+  { value: 'personal', label: 'Перевод документов' },
+  { value: 'oral', label: 'Устный перевод' },
+  { value: 'citizenship', label: 'Болгарское гражданство' },
+  { value: 'other', label: 'Другое' },
+];
+
+const contactInfo = [
+  { icon: 'fa-phone-alt', label: 'Телефон', value: '+380 67 500 90 98', href: 'tel:+380675009098', isLink: true },
+  { icon: 'fa-envelope', label: 'Email', value: 'info@europe-trans.net', href: 'mailto:info@europe-trans.net', isLink: true },
+  { icon: 'fa-globe', label: 'Вебсайт', value: 'europe-trans.net', href: 'https://www.europe-trans.net', isLink: true, external: true },
+  { icon: 'fa-map-marker-alt', label: 'Расположение', value: 'Республика Молдова', isLink: false },
+];
+---
+
+<section class="section section--dark" id="contact">
+    <div class="container">
+        <div class="section__header">
+            <span class="section__tag section__tag--light">Свяжитесь со мной</span>
+            <h2 class="section__title section__title--light">Контакты</h2>
+        </div>
+        <div class="contact__grid">
+            <form class="contact-form" action="#" method="post" novalidate>
+                <div class="form__row">
+                    <div class="form__group">
+                        <label for="cName">Ваше имя *</label>
+                        <input type="text" id="cName" name="name" placeholder="Иван Иванов" required>
+                    </div>
+                    <div class="form__group">
+                        <label for="cEmail">Email *</label>
+                        <input type="email" id="cEmail" name="email" placeholder="ivan@example.com" required>
+                    </div>
+                </div>
+                <div class="form__group">
+                    <label for="cSubject">Тема обращения</label>
+                    <select id="cSubject" name="subject">
+                        <option value="">Выберите тему...</option>
+                        {subjects.map(s => (
+                            <option value={s.value}>{s.label}</option>
+                        ))}
+                    </select>
+                </div>
+                <div class="form__group">
+                    <label for="cMsg">Сообщение *</label>
+                    <textarea id="cMsg" name="message" rows="4" placeholder="Опишите ваш запрос..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn--light btn--block">Отправить сообщение</button>
+            </form>
+            <div class="contact__info">
+                {contactInfo.map(ci => (
+                    <div class="ci">
+                        <i class={`fas ${ci.icon}`}></i>
+                        <div>
+                            <strong>{ci.label}</strong>
+                            {ci.isLink ? (
+                                <a href={ci.href} {...(ci.external ? { target: '_blank' } : {})}>{ci.value}</a>
+                            ) : (
+                                <span>{ci.value}</span>
+                            )}
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </div>
+</section>

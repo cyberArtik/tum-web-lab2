@@ -1,0 +1,43 @@
+---
+const languages = [
+  { flag: 'ro', alt: 'RO', name: 'Румынский' },
+  { flag: 'bg', alt: 'BG', name: 'Болгарский' },
+  { flag: 'ru', alt: 'RU', name: 'Русский' },
+];
+
+const stats = [
+  { value: '22+', label: 'лет опыта' },
+  { value: '3', label: 'языка' },
+  { value: '1000+', label: 'переводов' },
+];
+---
+
+<section class="hero tw-min-h-screen tw-flex tw-items-center" id="hero">
+    <div class="container hero__inner">
+        <div class="hero__text">
+            <span class="badge tw-inline-block tw-rounded-full">Аккредитованный переводчик при Посольстве РБ</span>
+            <h1 class="hero__title">Профессиональный<br><em>Переводчик</em></h1>
+            <div class="hero__langs">
+                {languages.map(lang => (
+                    <span>
+                        <img src={`https://flagcdn.com/w40/${lang.flag}.png`} alt={lang.alt} width="20" height="14" />
+                        {lang.name}
+                    </span>
+                ))}
+            </div>
+            <p class="hero__desc">Более 22 лет опыта в сфере переводов. Гарантирую конфиденциальность, высокое качество и соблюдение сроков.</p>
+            <div class="hero__cta-row tw-flex tw-flex-wrap tw-gap-3">
+                <a href="#contact" class="btn btn--primary">Заказать перевод</a>
+                <a href="#services" class="btn btn--outline">Услуги</a>
+            </div>
+        </div>
+        <div class="hero__stats">
+            {stats.map(stat => (
+                <div class="stat">
+                    <strong>{stat.value}</strong>
+                    <span>{stat.label}</span>
+                </div>
+            ))}
+        </div>
+    </div>
+</section>

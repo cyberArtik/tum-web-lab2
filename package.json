@@ -1,0 +1,26 @@
+{
+  "name": "tum-web-lab2",
+  "version": "1.0.0",
+  "description": "Create a web page for your/friends/relatives business (example: car-rent, cookies-shop, crypto-scam)",
+  "main": "index.js",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cyberArtik/tum-web-lab2.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/cyberArtik/tum-web-lab2/issues"
+  },
+  "homepage": "https://github.com/cyberArtik/tum-web-lab2#readme",
+  "dependencies": {
+    "astro": "^5.18.0"
+  }
+}
