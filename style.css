@@ -852,6 +852,7 @@ ul  { list-style: none; }
 @media (max-width: 768px) {
     .mobile-only-banner { display: block; }
     .mobile-cta-bar     { display: block; }
+    /* Add bottom padding to body so footer isn't hidden behind sticky CTA */
     body { padding-bottom: 64px; }
 }
 
