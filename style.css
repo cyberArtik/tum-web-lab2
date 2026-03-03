@@ -708,6 +708,8 @@ ul  { list-style: none; }
 }
 .footer__legal { opacity: .6; }
 
+/* Responsivness redesign */
+
 @media (max-width: 1024px) {
     .hero__inner     { flex-direction: column; text-align: center; padding: 80px 24px 56px; }
     .hero__text      { max-width: 100%; }
@@ -723,6 +725,18 @@ ul  { list-style: none; }
     .proc__row       { grid-template-columns: repeat(2, 1fr); }
     .revs            { grid-template-columns: 1fr; }
     .contact__grid   { grid-template-columns: 1fr; }
+
+    /* Adjusted sizing for tablets */
+    .section         { padding: 64px 0; }
+    .section__title  { font-size: 2.2rem; }
+    .stat            { padding: 20px 24px; }
+    .stat strong     { font-size: 2rem; }
+    .bento__main     { padding: 28px; }
+    .bento__guarantees { padding: 24px 28px; }
+    .dcard           { padding: 24px 20px; }
+    .proc            { padding: 28px 20px; }
+    .rev             { padding: 28px 24px; }
+    .contact-form    { padding: 28px; }
 }
 
 @media (max-width: 768px) {
@@ -742,9 +756,7 @@ ul  { list-style: none; }
         box-shadow: var(--shadow);
         z-index: 99;
     }
-    /* show menu when checkbox is checked */
     .nav__toggle:checked ~ .nav__menu { display: flex; }
-    /* Hamburger rotation animation when open */
     .nav__toggle:checked ~ .nav__hamburger span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
     .nav__toggle:checked ~ .nav__hamburger span:nth-child(2) { opacity: 0; }
     .nav__toggle:checked ~ .nav__hamburger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
@@ -754,6 +766,26 @@ ul  { list-style: none; }
 
     .footer__row     { flex-direction: column; gap: 20px; }
     .footer__bottom  { flex-direction: column; gap: 8px; text-align: center; }
+
+    .hero__desc        { font-size: .9rem; }
+    .badge             { font-size: .72rem; padding: 5px 12px; }
+    .bento__lead       { font-size: .95rem; }
+    .bento__card h4    { font-size: .88rem; }
+    .bento__card p     { font-size: .8rem; }
+    .cway              { padding: 20px 12px; }
+    .cway h4           { font-size: .88rem; }
+    .steps__title      { font-size: 1.3rem; }
+    .faq__q            { font-size: .9rem; padding: 14px 0; }
+    .proc__num         { font-size: 2rem; }
+    .ci i              { width: 38px; height: 38px; font-size: .9rem; }
+
+    .hero__cta-row .btn {
+        padding: 14px 28px;
+        font-size: .92rem;
+    }
+
+    .mascot__figure img { width: 72px; height: 72px; }
+    .mascot { right: 12px; bottom: 80px; } 
 }
 
 @media (max-width: 480px) {
@@ -763,5 +795,17 @@ ul  { list-style: none; }
     .cit__ways       { grid-template-columns: 1fr; }
     .proc__row       { grid-template-columns: 1fr; }
     .form__row       { grid-template-columns: 1fr; }
-}
 
+    /* Tighten spacing on small phones */
+    .section         { padding: 48px 0; }
+    .section__header { margin-bottom: 32px; }
+    .container       { padding: 0 16px; }
+    .hero__inner     { padding: 60px 16px 40px; }
+    .hero__title     { font-size: 1.75rem; }
+    .section__title  { font-size: 1.6rem; }
+    .btn             { padding: 11px 22px; font-size: .84rem; }
+    .stat            { padding: 18px 20px; min-width: auto; }
+    .stat strong     { font-size: 1.8rem; }
+    .mascot__figure img { width: 60px; height: 60px; }
+    .mascot__tooltip { font-size: .78rem; min-width: 160px; right: 0; }
+}
