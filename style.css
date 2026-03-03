@@ -785,7 +785,7 @@ ul  { list-style: none; }
     }
 
     .mascot__figure img { width: 72px; height: 72px; }
-    .mascot { right: 12px; bottom: 80px; } 
+    .mascot { right: 12px; bottom: 90px; z-index: 95; } 
 }
 
 @media (max-width: 480px) {
@@ -860,7 +860,7 @@ ul  { list-style: none; }
     position: fixed;
     bottom: 24px;
     right: 24px;
-    z-index: 80;
+    z-index: 95;
     opacity: 0;
     transform: translateY(40px) scale(.8);
     animation: mascotEnter .8s cubic-bezier(.34,1.56,.64,1) 3s forwards;
