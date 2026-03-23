@@ -1,17 +1,13 @@
 ---
-const navLinks = [
-  { href: '#hero', label: 'Главная' },
-  { href: '#about', label: 'Обо мне' },
-  { href: '#services', label: 'Услуги' },
-  { href: '#citizenship', label: 'Гражданство БГ' },
-];
+import headerData from '../../content/header.json';
+const { logoText, logoAccent, navLinks, ctaLabel } = headerData;
 ---
 
 <header class="header tw-fixed tw-top-0 tw-left-0 tw-right-0 tw-z-50" id="header">
     <div class="container">
         <nav class="nav tw-flex tw-items-center">
             <input type="checkbox" id="nav-toggle" class="nav__toggle">
-            <a href="#hero" class="nav__logo">Europe<span>Trans</span></a>
+            <a href="#hero" class="nav__logo">{logoText}<span>{logoAccent}</span></a>
             <label for="nav-toggle" class="nav__hamburger" aria-label="Меню">
                 <span></span><span></span><span></span>
             </label>
@@ -19,7 +15,7 @@ const navLinks = [
                 {navLinks.map(link => (
                     <li><a href={link.href} class="nav__link">{link.label}</a></li>
                 ))}
-                <li><a href="#contact" class="nav__link nav__link--cta">Связаться</a></li>
+                <li><a href="#contact" class="nav__link nav__link--cta">{ctaLabel}</a></li>
             </ul>
         </nav>
     </div>

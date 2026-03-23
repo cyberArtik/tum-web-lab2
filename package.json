@@ -4,8 +4,8 @@
   "description": "Create a web page for your/friends/relatives business (example: car-rent, cookies-shop, crypto-scam)",
   "main": "index.js",
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
+    "dev": "tinacms dev -c \"astro dev\"",
+    "build": "tinacms build && astro build",
     "preview": "astro preview"
   },
   "repository": {
@@ -21,6 +21,8 @@
   },
   "homepage": "https://github.com/cyberArtik/tum-web-lab2#readme",
   "dependencies": {
-    "astro": "^5.18.0"
+    "@tinacms/cli": "^2.1.11",
+    "astro": "^5.18.0",
+    "tinacms": "^3.6.3"
   }
 }

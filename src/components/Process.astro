@@ -1,17 +1,13 @@
 ---
-const steps = [
-  { num: '01', title: 'Отправьте заказ', desc: 'Отправьте документ по электронной почте или через форму на сайте.' },
-  { num: '02', title: 'Получите оценку', desc: 'Я просмотрю документ и сообщу стоимость работы и сроки выполнения.' },
-  { num: '03', title: 'Перевод', desc: 'Выполняю перевод с вниманием к деталям, терминологии и стилистике.' },
-  { num: '04', title: 'Готовый результат', desc: 'Вы получаете качественный перевод в оговорённые сроки.' },
-];
+import processData from '../../content/process.json';
+const { sectionTag, sectionTitle, steps } = processData;
 ---
 
 <section class="section" id="process">
     <div class="container">
         <div class="section__header">
-            <span class="section__tag">Просто и удобно</span>
-            <h2 class="section__title">Порядок работы</h2>
+            <span class="section__tag">{sectionTag}</span>
+            <h2 class="section__title">{sectionTitle}</h2>
         </div>
         <div class="proc__row">
             {steps.map(step => (

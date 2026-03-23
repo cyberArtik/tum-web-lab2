@@ -1,22 +1,13 @@
 ---
-const languages = [
-  { flag: 'ro', alt: 'RO', name: 'Румынский' },
-  { flag: 'bg', alt: 'BG', name: 'Болгарский' },
-  { flag: 'ru', alt: 'RU', name: 'Русский' },
-];
-
-const stats = [
-  { value: '22+', label: 'лет опыта' },
-  { value: '3', label: 'языка' },
-  { value: '1000+', label: 'переводов' },
-];
+import heroData from '../../content/hero.json';
+const { badge, title, titleEmphasis, description, ctaPrimary, ctaSecondary, languages, stats } = heroData;
 ---
 
 <section class="hero tw-min-h-screen tw-flex tw-items-center" id="hero">
     <div class="container hero__inner">
         <div class="hero__text">
-            <span class="badge tw-inline-block tw-rounded-full">Аккредитованный переводчик при Посольстве РБ</span>
-            <h1 class="hero__title">Профессиональный<br><em>Переводчик</em></h1>
+            <span class="badge tw-inline-block tw-rounded-full">{badge}</span>
+            <h1 class="hero__title">{title}<br><em>{titleEmphasis}</em></h1>
             <div class="hero__langs">
                 {languages.map(lang => (
                     <span>
@@ -25,10 +16,10 @@ const stats = [
                     </span>
                 ))}
             </div>
-            <p class="hero__desc">Более 22 лет опыта в сфере переводов. Гарантирую конфиденциальность, высокое качество и соблюдение сроков.</p>
+            <p class="hero__desc">{description}</p>
             <div class="hero__cta-row tw-flex tw-flex-wrap tw-gap-3">
-                <a href="#contact" class="btn btn--primary">Заказать перевод</a>
-                <a href="#services" class="btn btn--outline">Услуги</a>
+                <a href="#contact" class="btn btn--primary">{ctaPrimary}</a>
+                <a href="#services" class="btn btn--outline">{ctaSecondary}</a>
             </div>
         </div>
         <div class="hero__stats">
