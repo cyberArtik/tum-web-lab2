@@ -2,7 +2,7 @@ name: Deploy Astro site to Pages
 
 on:
   push:
-    branches: ["lab4-ssg-migration"]
+    branches: ["main"]
   workflow_dispatch:
 
 permissions:
@@ -29,7 +29,10 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build with Astro
+      - name: Build with TinaCMS + Astro
+        env:
+          NEXT_PUBLIC_TINA_CLIENT_ID: ${{ secrets.TINA_CLIENT_ID }}
+          TINA_TOKEN: ${{ secrets.TINA_TOKEN }}
         run: npm run build
 
       - name: Upload artifact
