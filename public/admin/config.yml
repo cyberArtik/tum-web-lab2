@@ -1,6 +1,5 @@
 backend:
-  name: github
-  repo: cyberArtik/tum-web-lab2
+  name: git-gateway
   branch: master
 
 media_folder: "public/images"
