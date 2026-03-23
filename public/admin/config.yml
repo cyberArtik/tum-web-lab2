@@ -1,0 +1,254 @@
+backend:
+  name: github
+  repo: cyberArtik/tum-web-lab2
+  branch: master
+
+media_folder: "public/images"
+public_folder: "/images"
+
+collections:
+  - name: "siteSettings"
+    label: "Site Settings"
+    files:
+      - name: "siteSettings"
+        label: "Site Settings"
+        file: "content/siteSettings.json"
+        fields:
+          - { label: "Site Title", name: "title", widget: "string", required: true }
+          - { label: "Meta Description", name: "description", widget: "string", required: true }
+
+  - name: "header"
+    label: "Header / Navigation"
+    files:
+      - name: "header"
+        label: "Header"
+        file: "content/header.json"
+        fields:
+          - { label: "Logo Text", name: "logoText", widget: "string" }
+          - { label: "Logo Accent", name: "logoAccent", widget: "string" }
+          - label: "Nav Links"
+            name: "navLinks"
+            widget: "list"
+            fields:
+              - { label: "Link URL", name: "href", widget: "string" }
+              - { label: "Link Label", name: "label", widget: "string" }
+          - { label: "CTA Button Label", name: "ctaLabel", widget: "string" }
+
+  - name: "hero"
+    label: "Hero Section"
+    files:
+      - name: "hero"
+        label: "Hero"
+        file: "content/hero.json"
+        fields:
+          - { label: "Badge Text", name: "badge", widget: "string" }
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Title Emphasis (italic)", name: "titleEmphasis", widget: "string" }
+          - { label: "Description", name: "description", widget: "text" }
+          - { label: "Primary CTA Text", name: "ctaPrimary", widget: "string" }
+          - { label: "Secondary CTA Text", name: "ctaSecondary", widget: "string" }
+          - label: "Languages"
+            name: "languages"
+            widget: "list"
+            fields:
+              - { label: "Flag Code (2-letter)", name: "flag", widget: "string" }
+              - { label: "Alt Text", name: "alt", widget: "string" }
+              - { label: "Language Name", name: "name", widget: "string" }
+          - label: "Statistics"
+            name: "stats"
+            widget: "list"
+            fields:
+              - { label: "Value", name: "value", widget: "string" }
+              - { label: "Label", name: "label", widget: "string" }
+
+  - name: "about"
+    label: "About Section"
+    files:
+      - name: "about"
+        label: "About"
+        file: "content/about.json"
+        fields:
+          - { label: "Section Tag", name: "sectionTag", widget: "string" }
+          - { label: "Section Title", name: "sectionTitle", widget: "string" }
+          - { label: "Lead Text", name: "lead", widget: "text" }
+          - label: "Paragraphs"
+            name: "paragraphs"
+            widget: "list"
+            field: { label: "Paragraph", name: "paragraph", widget: "text" }
+          - label: "Cards"
+            name: "cards"
+            widget: "list"
+            fields:
+              - { label: "Icon (FontAwesome class)", name: "icon", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "desc", widget: "string" }
+          - { label: "Guarantees Title", name: "guaranteesTitle", widget: "string" }
+          - label: "Guarantees"
+            name: "guarantees"
+            widget: "list"
+            field: { label: "Guarantee", name: "guarantee", widget: "string" }
+
+  - name: "services"
+    label: "Services Section"
+    files:
+      - name: "services"
+        label: "Services"
+        file: "content/services.json"
+        fields:
+          - { label: "Section Tag", name: "sectionTag", widget: "string" }
+          - { label: "Section Title", name: "sectionTitle", widget: "string" }
+          - { label: "Section Description", name: "sectionDesc", widget: "text" }
+          - label: "Services"
+            name: "services"
+            widget: "list"
+            fields:
+              - { label: "Icon (FontAwesome class)", name: "icon", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "desc", widget: "string" }
+          - { label: "CTA Icon", name: "ctaIcon", widget: "string" }
+          - { label: "CTA Title", name: "ctaTitle", widget: "string" }
+          - { label: "CTA Description", name: "ctaDesc", widget: "string" }
+          - { label: "CTA Button Text", name: "ctaButton", widget: "string" }
+
+  - name: "citizenship"
+    label: "Citizenship Section"
+    files:
+      - name: "citizenship"
+        label: "Citizenship"
+        file: "content/citizenship.json"
+        fields:
+          - { label: "Section Tag", name: "sectionTag", widget: "string" }
+          - { label: "Section Title", name: "sectionTitle", widget: "string" }
+          - { label: "Section Description", name: "sectionDesc", widget: "text" }
+          - label: "Ways to Get Citizenship"
+            name: "ways"
+            widget: "list"
+            fields:
+              - { label: "Icon", name: "icon", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "desc", widget: "string" }
+          - { label: "Steps Title", name: "stepsTitle", widget: "string" }
+          - label: "Steps"
+            name: "steps"
+            widget: "list"
+            fields:
+              - { label: "Step Number", name: "num", widget: "number" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Time/Duration", name: "time", widget: "string" }
+          - { label: "FAQ Title", name: "faqTitle", widget: "string" }
+          - label: "FAQs"
+            name: "faqs"
+            widget: "list"
+            fields:
+              - { label: "Question", name: "q", widget: "string" }
+              - { label: "Answer", name: "a", widget: "text" }
+
+  - name: "process"
+    label: "Process Section"
+    files:
+      - name: "process"
+        label: "Process"
+        file: "content/process.json"
+        fields:
+          - { label: "Section Tag", name: "sectionTag", widget: "string" }
+          - { label: "Section Title", name: "sectionTitle", widget: "string" }
+          - label: "Steps"
+            name: "steps"
+            widget: "list"
+            fields:
+              - { label: "Step Number", name: "num", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "desc", widget: "string" }
+
+  - name: "testimonials"
+    label: "Testimonials Section"
+    files:
+      - name: "testimonials"
+        label: "Testimonials"
+        file: "content/testimonials.json"
+        fields:
+          - { label: "Section Tag", name: "sectionTag", widget: "string" }
+          - { label: "Section Title", name: "sectionTitle", widget: "string" }
+          - label: "Reviews"
+            name: "reviews"
+            widget: "list"
+            fields:
+              - { label: "Review Text", name: "text", widget: "text" }
+              - { label: "Author/Category", name: "author", widget: "string" }
+
+  - name: "contact"
+    label: "Contact Section"
+    files:
+      - name: "contact"
+        label: "Contact"
+        file: "content/contact.json"
+        fields:
+          - { label: "Section Tag", name: "sectionTag", widget: "string" }
+          - { label: "Section Title", name: "sectionTitle", widget: "string" }
+          - label: "Form Subjects"
+            name: "subjects"
+            widget: "list"
+            fields:
+              - { label: "Value", name: "value", widget: "string" }
+              - { label: "Label", name: "label", widget: "string" }
+          - label: "Form Labels"
+            name: "formLabels"
+            widget: "object"
+            fields:
+              - { label: "Name Label", name: "name", widget: "string" }
+              - { label: "Name Placeholder", name: "namePlaceholder", widget: "string" }
+              - { label: "Email Label", name: "email", widget: "string" }
+              - { label: "Email Placeholder", name: "emailPlaceholder", widget: "string" }
+              - { label: "Subject Label", name: "subject", widget: "string" }
+              - { label: "Subject Placeholder", name: "subjectPlaceholder", widget: "string" }
+              - { label: "Message Label", name: "message", widget: "string" }
+              - { label: "Message Placeholder", name: "messagePlaceholder", widget: "string" }
+              - { label: "Submit Button Text", name: "submit", widget: "string" }
+          - label: "Contact Info"
+            name: "contactInfo"
+            widget: "list"
+            fields:
+              - { label: "Icon", name: "icon", widget: "string" }
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "Display Value", name: "value", widget: "string" }
+              - { label: "Link URL", name: "href", widget: "string", required: false }
+              - { label: "Is Clickable Link", name: "isLink", widget: "boolean", default: false }
+              - { label: "Open in New Tab", name: "external", widget: "boolean", default: false, required: false }
+
+  - name: "footer"
+    label: "Footer"
+    files:
+      - name: "footer"
+        label: "Footer"
+        file: "content/footer.json"
+        fields:
+          - { label: "Logo Text", name: "logoText", widget: "string" }
+          - { label: "Logo Accent", name: "logoAccent", widget: "string" }
+          - { label: "Description", name: "description", widget: "string" }
+          - { label: "Phone Number", name: "phone", widget: "string" }
+          - { label: "Phone Link", name: "phoneHref", widget: "string" }
+          - { label: "Email", name: "email", widget: "string" }
+          - { label: "Email Link", name: "emailHref", widget: "string" }
+          - { label: "Copyright Text", name: "copyright", widget: "string" }
+          - { label: "Legal Text", name: "legal", widget: "string" }
+
+  - name: "mascot"
+    label: "Mascot"
+    files:
+      - name: "mascot"
+        label: "Mascot"
+        file: "content/mascot.json"
+        fields:
+          - { label: "Tooltip Text", name: "tooltip", widget: "text" }
+          - { label: "Image Alt Text", name: "altText", widget: "string" }
+          - { label: "Image Path", name: "image", widget: "string" }
+
+  - name: "mobileBanner"
+    label: "Mobile Banner"
+    files:
+      - name: "mobileBanner"
+        label: "Mobile Banner"
+        file: "content/mobileBanner.json"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Description", name: "description", widget: "string" }

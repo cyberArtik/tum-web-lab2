@@ -12,9 +12,6 @@ node_modules/
 .vscode/
 .idea/
 
-# TinaCMS
-tina/__generated__/
-
 # OS
 .DS_Store
 Thumbs.db
