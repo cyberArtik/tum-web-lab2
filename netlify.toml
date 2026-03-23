@@ -1,3 +1,8 @@
 [build]
   command = "rm -rf node_modules && npm install && npx astro build"
   publish = "dist"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
