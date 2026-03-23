@@ -8,9 +8,10 @@ import Citizenship from '../components/Citizenship.astro';
 import Process from '../components/Process.astro';
 import Testimonials from '../components/Testimonials.astro';
 import Contact from '../components/Contact.astro';
+import siteSettings from '../../content/siteSettings.json';
 ---
 
-<Layout title="EuropeTrans — Профессиональный переводчик" description="Переводы документов, болгарское гражданство, устный перевод — 22+ лет опыта.">
+<Layout title={siteSettings.title} description={siteSettings.description}>
     <Hero />
     <MobileBanner />
     <About />

@@ -1,19 +1,14 @@
 ---
-const services = [
-  { icon: 'fa-id-card', title: 'Личные документы', desc: 'Свидетельства, дипломы, справки, доверенности и другие личные документы.' },
-  { icon: 'fa-balance-scale', title: 'Юридическая документация', desc: 'Учредительные документы, решения суда, контракты, финансовая документация.' },
-  { icon: 'fa-heartbeat', title: 'Медицинские документы', desc: 'Справки, заключения, аннотации к лекарственным препаратам.' },
-  { icon: 'fa-headset', title: 'Устный перевод', desc: 'Последовательный и синхронный перевод на переговорах, конференциях и встречах.' },
-  { icon: 'fa-passport', title: 'Консульские переводы', desc: 'Переводы для Консульства Республики Болгария в Молдове.' },
-];
+import servicesData from '../../content/services.json';
+const { sectionTag, sectionTitle, sectionDesc, services, ctaIcon, ctaTitle, ctaDesc, ctaButton } = servicesData;
 ---
 
 <section class="section section--dark" id="services">
     <div class="container">
         <div class="section__header">
-            <span class="section__tag section__tag--light">Что я предлагаю</span>
-            <h2 class="section__title section__title--light">Услуги перевода</h2>
-            <p class="section__desc section__desc--light">Обратившись ко мне, Вы можете рассчитывать на высокое качество, соблюдение сроков и индивидуальный подход.</p>
+            <span class="section__tag section__tag--light">{sectionTag}</span>
+            <h2 class="section__title section__title--light">{sectionTitle}</h2>
+            <p class="section__desc section__desc--light">{sectionDesc}</p>
         </div>
         <div class="services__grid">
             {services.map(service => (
@@ -24,10 +19,10 @@ const services = [
                 </div>
             ))}
             <div class="dcard dcard--cta">
-                <i class="fas fa-comment-dots"></i>
-                <h3>Не нашли нужное?</h3>
-                <p>Свяжитесь со мной — найдём решение!</p>
-                <a href="#contact" class="btn btn--sm">Написать</a>
+                <i class={`fas ${ctaIcon}`}></i>
+                <h3>{ctaTitle}</h3>
+                <p>{ctaDesc}</p>
+                <a href="#contact" class="btn btn--sm">{ctaButton}</a>
             </div>
         </div>
     </div>

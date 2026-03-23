@@ -1,32 +1,14 @@
 ---
-const ways = [
-  { icon: 'fa-dna', title: 'По происхождению', desc: 'Болгарские корни в свидетельстве о рождении или у родителей.' },
-  { icon: 'fa-home', title: 'По натурализации', desc: 'Проживание в Болгарии не менее 5 лет, знание языка и легальный доход.' },
-  { icon: 'fa-chart-line', title: 'Через инвестиции', desc: 'Инвестиции от 600 000 левов с последующим гражданством.' },
-  { icon: 'fa-heart', title: 'По привилегиям', desc: 'Брак с гражданином Болгарии (3+ лет) или статус беженца.' },
-];
-
-const steps = [
-  { num: 1, title: 'Подача в ДАБЧ', time: '≈ до 2,5 месяцев' },
-  { num: 2, title: 'Удостоверение', time: '≈ 3 дня в Софии' },
-  { num: 3, title: 'Собеседование', time: '10–15 вопросов' },
-  { num: 4, title: 'Гражданство', time: 'Финальный этап' },
-];
-
-const faqs = [
-  { q: 'Кто может претендовать на болгарское гражданство?', a: 'Лица, чьи родители (или один из родителей) являются болгарами или гагаузами по национальности, а также лица, чьи родители являются гражданами Республики Болгария.' },
-  { q: 'Сколько длится вся процедура оформления?', a: 'Общая продолжительность процедуры оформления болгарского гражданства составляет 3–4 года.' },
-  { q: 'Где можно подать документы?', a: 'Документы можно подать в ДАБЧ в Софии или через дипломатические миссии: Консульство в Кишинёве (ул. Еминеску, 4) или Консульство в Тараклии.' },
-  { q: 'Какие языки доступны для перевода?', a: 'Румынский, болгарский и русский языки.' },
-];
+import citData from '../../content/citizenship.json';
+const { sectionTag, sectionTitle, sectionDesc, ways, stepsTitle, steps, faqTitle, faqs } = citData;
 ---
 
 <section class="section section--soft" id="citizenship">
     <div class="container">
         <div class="section__header">
-            <span class="section__tag">Дополнительная услуга</span>
-            <h2 class="section__title">Болгарское гражданство</h2>
-            <p class="section__desc">Паспорт Болгарии — безвизовые поездки в 169 стран мира, включая страны ЕС, Канаду, Новую Зеландию и другие.</p>
+            <span class="section__tag">{sectionTag}</span>
+            <h2 class="section__title">{sectionTitle}</h2>
+            <p class="section__desc">{sectionDesc}</p>
         </div>
         <div class="cit__ways">
             {ways.map(way => (
@@ -38,7 +20,7 @@ const faqs = [
             ))}
         </div>
 
-        <h3 class="steps__title">Этапы оформления (по происхождению)</h3>
+        <h3 class="steps__title">{stepsTitle}</h3>
         <div class="steps__row">
             {steps.map((step, i) => (
                 <>
@@ -52,7 +34,7 @@ const faqs = [
             ))}
         </div>
 
-        <h3 class="steps__title" style="margin-top: 56px;">Часто задаваемые вопросы</h3>
+        <h3 class="steps__title" style="margin-top: 56px;">{faqTitle}</h3>
         <div class="faq">
             {faqs.map(faq => (
                 <details class="faq__item">

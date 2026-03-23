@@ -1,0 +1,27 @@
+{
+  "sectionTag": "Свяжитесь со мной",
+  "sectionTitle": "Контакты",
+  "subjects": [
+    { "value": "personal", "label": "Перевод документов" },
+    { "value": "oral", "label": "Устный перевод" },
+    { "value": "citizenship", "label": "Болгарское гражданство" },
+    { "value": "other", "label": "Другое" }
+  ],
+  "formLabels": {
+    "name": "Ваше имя *",
+    "namePlaceholder": "Иван Иванов",
+    "email": "Email *",
+    "emailPlaceholder": "ivan@example.com",
+    "subject": "Тема обращения",
+    "subjectPlaceholder": "Выберите тему...",
+    "message": "Сообщение *",
+    "messagePlaceholder": "Опишите ваш запрос...",
+    "submit": "Отправить сообщение"
+  },
+  "contactInfo": [
+    { "icon": "fa-phone-alt", "label": "Телефон", "value": "+380 67 500 90 98", "href": "tel:+380675009098", "isLink": true },
+    { "icon": "fa-envelope", "label": "Email", "value": "info@europe-trans.net", "href": "mailto:info@europe-trans.net", "isLink": true },
+    { "icon": "fa-globe", "label": "Вебсайт", "value": "europe-trans.net", "href": "https://www.europe-trans.net", "isLink": true, "external": true },
+    { "icon": "fa-map-marker-alt", "label": "Расположение", "value": "Республика Молдова", "isLink": false }
+  ]
+}

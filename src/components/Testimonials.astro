@@ -1,16 +1,13 @@
 ---
-const reviews = [
-  { text: '«Переводчик помог на всех этапах оформления гражданства — от подготовки документов до финального оформления. Очень профессиональный подход!»', author: 'Оформление гражданства' },
-  { text: '«Справку о болгарском происхождении получил быстро и без проблем благодаря грамотно подготовленным переводам. Рекомендую!»', author: 'Перевод документов' },
-  { text: '«Профессионализм, пунктуальность и внимание к деталям. Сотрудничаю уже несколько лет и всегда довольна результатом!»', author: 'Постоянный клиент' },
-];
+import testimonialsData from '../../content/testimonials.json';
+const { sectionTag, sectionTitle, reviews } = testimonialsData;
 ---
 
 <section class="section section--soft" id="testimonials">
     <div class="container">
         <div class="section__header">
-            <span class="section__tag">Доверие клиентов</span>
-            <h2 class="section__title">Отзывы</h2>
+            <span class="section__tag">{sectionTag}</span>
+            <h2 class="section__title">{sectionTitle}</h2>
         </div>
         <div class="revs">
             {reviews.map(rev => (
