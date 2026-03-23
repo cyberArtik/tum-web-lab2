@@ -23,6 +23,7 @@ collections:
         label: "Header"
         file: "content/header.json"
         fields:
+          - { label: "Visible", name: "visible", widget: "boolean", default: true }
           - { label: "Logo Text", name: "logoText", widget: "string" }
           - { label: "Logo Accent", name: "logoAccent", widget: "string" }
           - label: "Nav Links"
@@ -40,6 +41,7 @@ collections:
         label: "Hero"
         file: "content/hero.json"
         fields:
+          - { label: "Visible", name: "visible", widget: "boolean", default: true }
           - { label: "Badge Text", name: "badge", widget: "string" }
           - { label: "Title", name: "title", widget: "string" }
           - { label: "Title Emphasis (italic)", name: "titleEmphasis", widget: "string" }
@@ -67,6 +69,7 @@ collections:
         label: "About"
         file: "content/about.json"
         fields:
+          - { label: "Visible", name: "visible", widget: "boolean", default: true }
           - { label: "Section Tag", name: "sectionTag", widget: "string" }
           - { label: "Section Title", name: "sectionTitle", widget: "string" }
           - { label: "Lead Text", name: "lead", widget: "text" }
@@ -94,6 +97,7 @@ collections:
         label: "Services"
         file: "content/services.json"
         fields:
+          - { label: "Visible", name: "visible", widget: "boolean", default: true }
           - { label: "Section Tag", name: "sectionTag", widget: "string" }
           - { label: "Section Title", name: "sectionTitle", widget: "string" }
           - { label: "Section Description", name: "sectionDesc", widget: "text" }
@@ -116,6 +120,7 @@ collections:
         label: "Citizenship"
         file: "content/citizenship.json"
         fields:
+          - { label: "Visible", name: "visible", widget: "boolean", default: true }
           - { label: "Section Tag", name: "sectionTag", widget: "string" }
           - { label: "Section Title", name: "sectionTitle", widget: "string" }
           - { label: "Section Description", name: "sectionDesc", widget: "text" }
@@ -149,6 +154,7 @@ collections:
         label: "Process"
         file: "content/process.json"
         fields:
+          - { label: "Visible", name: "visible", widget: "boolean", default: true }
           - { label: "Section Tag", name: "sectionTag", widget: "string" }
           - { label: "Section Title", name: "sectionTitle", widget: "string" }
           - label: "Steps"
@@ -166,6 +172,7 @@ collections:
         label: "Testimonials"
         file: "content/testimonials.json"
         fields:
+          - { label: "Visible", name: "visible", widget: "boolean", default: true }
           - { label: "Section Tag", name: "sectionTag", widget: "string" }
           - { label: "Section Title", name: "sectionTitle", widget: "string" }
           - label: "Reviews"
@@ -182,6 +189,7 @@ collections:
         label: "Contact"
         file: "content/contact.json"
         fields:
+          - { label: "Visible", name: "visible", widget: "boolean", default: true }
           - { label: "Section Tag", name: "sectionTag", widget: "string" }
           - { label: "Section Title", name: "sectionTitle", widget: "string" }
           - label: "Form Subjects"
@@ -221,6 +229,7 @@ collections:
         label: "Footer"
         file: "content/footer.json"
         fields:
+          - { label: "Visible", name: "visible", widget: "boolean", default: true }
           - { label: "Logo Text", name: "logoText", widget: "string" }
           - { label: "Logo Accent", name: "logoAccent", widget: "string" }
           - { label: "Description", name: "description", widget: "string" }
@@ -238,6 +247,7 @@ collections:
         label: "Mascot"
         file: "content/mascot.json"
         fields:
+          - { label: "Visible", name: "visible", widget: "boolean", default: true }
           - { label: "Tooltip Text", name: "tooltip", widget: "text" }
           - { label: "Image Alt Text", name: "altText", widget: "string" }
           - { label: "Image Path", name: "image", widget: "string" }
@@ -249,5 +259,6 @@ collections:
         label: "Mobile Banner"
         file: "content/mobileBanner.json"
         fields:
+          - { label: "Visible", name: "visible", widget: "boolean", default: true }
           - { label: "Title", name: "title", widget: "string" }
           - { label: "Description", name: "description", widget: "string" }

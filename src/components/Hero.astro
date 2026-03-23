@@ -1,9 +1,9 @@
 ---
 import heroData from '../../content/hero.json';
-const { badge, title, titleEmphasis, description, ctaPrimary, ctaSecondary, languages, stats } = heroData;
+const { visible, badge, title, titleEmphasis, description, ctaPrimary, ctaSecondary, languages, stats } = heroData;
 ---
 
-<section class="hero tw-min-h-screen tw-flex tw-items-center" id="hero">
+{visible && <section class="hero tw-min-h-screen tw-flex tw-items-center" id="hero">
     <div class="container hero__inner">
         <div class="hero__text">
             <span class="badge tw-inline-block tw-rounded-full">{badge}</span>
@@ -31,4 +31,4 @@ const { badge, title, titleEmphasis, description, ctaPrimary, ctaSecondary, lang
             ))}
         </div>
     </div>
-</section>
+</section>}

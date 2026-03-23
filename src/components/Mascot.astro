@@ -1,12 +1,12 @@
 ---
 import mascotData from '../../content/mascot.json';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const { tooltip, altText, image } = mascotData;
+const { visible, tooltip, altText, image } = mascotData;
 ---
 
-<div class="mascot" id="mascot" aria-label="Маскот-переводчик">
+{visible && <div class="mascot" id="mascot" aria-label="Маскот-переводчик">
     <div class="mascot__tooltip" set:html={tooltip.replace(/\n/g, '<br>')} />
     <div class="mascot__figure">
         <img src={`${base}${image}`} alt={altText} width="100" height="100">
     </div>
-</div>
+</div>}

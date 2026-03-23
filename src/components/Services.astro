@@ -1,9 +1,9 @@
 ---
 import servicesData from '../../content/services.json';
-const { sectionTag, sectionTitle, sectionDesc, services, ctaIcon, ctaTitle, ctaDesc, ctaButton } = servicesData;
+const { visible, sectionTag, sectionTitle, sectionDesc, services, ctaIcon, ctaTitle, ctaDesc, ctaButton } = servicesData;
 ---
 
-<section class="section section--dark" id="services">
+{visible && <section class="section section--dark" id="services">
     <div class="container">
         <div class="section__header">
             <span class="section__tag section__tag--light">{sectionTag}</span>
@@ -26,4 +26,4 @@ const { sectionTag, sectionTitle, sectionDesc, services, ctaIcon, ctaTitle, ctaD
             </div>
         </div>
     </div>
-</section>
+</section>}

@@ -2,10 +2,23 @@
   "logoText": "Europe",
   "logoAccent": "Trans",
   "navLinks": [
-    { "href": "#hero", "label": "Главная" },
-    { "href": "#about", "label": "Обо мне" },
-    { "href": "#services", "label": "Услуги" },
-    { "href": "#citizenship", "label": "Гражданство БГ" }
+    {
+      "href": "#hero",
+      "label": "Главная"
+    },
+    {
+      "href": "#about",
+      "label": "Обо мне"
+    },
+    {
+      "href": "#services",
+      "label": "Услуги"
+    },
+    {
+      "href": "#citizenship",
+      "label": "Гражданство БГ"
+    }
   ],
-  "ctaLabel": "Связаться"
+  "ctaLabel": "Связаться",
+  "visible": true
 }

@@ -1,9 +1,9 @@
 ---
 import processData from '../../content/process.json';
-const { sectionTag, sectionTitle, steps } = processData;
+const { visible, sectionTag, sectionTitle, steps } = processData;
 ---
 
-<section class="section" id="process">
+{visible && <section class="section" id="process">
     <div class="container">
         <div class="section__header">
             <span class="section__tag">{sectionTag}</span>
@@ -19,4 +19,4 @@ const { sectionTag, sectionTitle, steps } = processData;
             ))}
         </div>
     </div>
-</section>
+</section>}

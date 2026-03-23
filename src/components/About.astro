@@ -1,9 +1,9 @@
 ---
 import aboutData from '../../content/about.json';
-const { sectionTag, sectionTitle, lead, paragraphs, cards, guaranteesTitle, guarantees } = aboutData;
+const { visible, sectionTag, sectionTitle, lead, paragraphs, cards, guaranteesTitle, guarantees } = aboutData;
 ---
 
-<section class="section" id="about">
+{visible && <section class="section" id="about">
     <div class="container">
         <div class="section__header">
             <span class="section__tag">{sectionTag}</span>
@@ -33,4 +33,4 @@ const { sectionTag, sectionTitle, lead, paragraphs, cards, guaranteesTitle, guar
             </div>
         </div>
     </div>
-</section>
+</section>}

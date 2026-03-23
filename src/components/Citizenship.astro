@@ -1,9 +1,9 @@
 ---
 import citData from '../../content/citizenship.json';
-const { sectionTag, sectionTitle, sectionDesc, ways, stepsTitle, steps, faqTitle, faqs } = citData;
+const { visible, sectionTag, sectionTitle, sectionDesc, ways, stepsTitle, steps, faqTitle, faqs } = citData;
 ---
 
-<section class="section section--soft" id="citizenship">
+{visible && <section class="section section--soft" id="citizenship">
     <div class="container">
         <div class="section__header">
             <span class="section__tag">{sectionTag}</span>
@@ -44,4 +44,4 @@ const { sectionTag, sectionTitle, sectionDesc, ways, stepsTitle, steps, faqTitle
             ))}
         </div>
     </div>
-</section>
+</section>}

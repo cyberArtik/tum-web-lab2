@@ -1,5 +1,6 @@
 {
   "tooltip": "Привет! Нужен перевод?\nЯ помогу) напишите мне!",
   "altText": "Маскот EuropeTrans — дружелюбный переводчик",
-  "image": "/mascot.jpg"
+  "image": "/mascot.jpg",
+  "visible": true
 }

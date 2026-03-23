@@ -1,9 +1,9 @@
 ---
 import footerData from '../../content/footer.json';
-const { logoText, logoAccent, description, phone, phoneHref, email, emailHref, copyright, legal } = footerData;
+const { visible, logoText, logoAccent, description, phone, phoneHref, email, emailHref, copyright, legal } = footerData;
 ---
 
-<footer class="footer tw-py-12">
+{visible && <footer class="footer tw-py-12">
     <div class="container">
         <div class="footer__row tw-flex tw-justify-between">
             <div class="footer__brand">
@@ -20,4 +20,4 @@ const { logoText, logoAccent, description, phone, phoneHref, email, emailHref, c
             <p class="footer__legal">{legal}</p>
         </div>
     </div>
-</footer>
+</footer>}

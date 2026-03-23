@@ -1,9 +1,9 @@
 ---
 import headerData from '../../content/header.json';
-const { logoText, logoAccent, navLinks, ctaLabel } = headerData;
+const { visible, logoText, logoAccent, navLinks, ctaLabel } = headerData;
 ---
 
-<header class="header tw-fixed tw-top-0 tw-left-0 tw-right-0 tw-z-50" id="header">
+{visible && <header class="header tw-fixed tw-top-0 tw-left-0 tw-right-0 tw-z-50" id="header">
     <div class="container">
         <nav class="nav tw-flex tw-items-center">
             <input type="checkbox" id="nav-toggle" class="nav__toggle">
@@ -19,4 +19,4 @@ const { logoText, logoAccent, navLinks, ctaLabel } = headerData;
             </ul>
         </nav>
     </div>
-</header>
+</header>}

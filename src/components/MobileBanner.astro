@@ -1,9 +1,9 @@
 ---
 import bannerData from '../../content/mobileBanner.json';
-const { title, description } = bannerData;
+const { visible, title, description } = bannerData;
 ---
 
-<section class="mobile-only-banner">
+{visible && <section class="mobile-only-banner">
     <div class="container">
         <div class="mobile-only-banner__inner tw-text-center tw-py-6">
             <i class="fas fa-mobile-alt tw-text-2xl tw-mb-2" style="color:var(--c-mid)"></i>
@@ -11,4 +11,4 @@ const { title, description } = bannerData;
             <p class="tw-text-sm" style="color:var(--c-text-light)">{description}</p>
         </div>
     </div>
-</section>
+</section>}

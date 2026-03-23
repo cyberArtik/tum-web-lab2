@@ -6,13 +6,35 @@
   "ctaPrimary": "Заказать перевод",
   "ctaSecondary": "Услуги",
   "languages": [
-    { "flag": "ro", "alt": "RO", "name": "Румынский" },
-    { "flag": "bg", "alt": "BG", "name": "Болгарский" },
-    { "flag": "ru", "alt": "RU", "name": "Русский" }
+    {
+      "flag": "ro",
+      "alt": "RO",
+      "name": "Румынский"
+    },
+    {
+      "flag": "bg",
+      "alt": "BG",
+      "name": "Болгарский"
+    },
+    {
+      "flag": "ru",
+      "alt": "RU",
+      "name": "Русский"
+    }
   ],
   "stats": [
-    { "value": "22+", "label": "лет опыта" },
-    { "value": "3", "label": "языка" },
-    { "value": "1000+", "label": "переводов" }
-  ]
+    {
+      "value": "22+",
+      "label": "лет опыта"
+    },
+    {
+      "value": "3",
+      "label": "языка"
+    },
+    {
+      "value": "1000+",
+      "label": "переводов"
+    }
+  ],
+  "visible": true
 }
