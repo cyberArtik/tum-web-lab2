@@ -9,5 +9,12 @@
 </head>
 <body>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  <script>
+    // Load your site's styles into the CMS preview pane
+    CMS.registerPreviewStyle("/reset.css");
+    CMS.registerPreviewStyle("/style.css");
+    CMS.registerPreviewStyle("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@400;600;700&display=swap");
+    CMS.registerPreviewStyle("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css");
+  </script>
 </body>
 </html>
