@@ -15,3 +15,6 @@ node_modules/
 # OS
 .DS_Store
 Thumbs.db
+
+# go2web cache
+.go2web_cache/
