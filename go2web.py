@@ -2,11 +2,8 @@ import sys
 import socket
 import ssl
 import argparse
-import json
 import io
-from urllib.parse import urlparse, quote_plus, parse_qs
-
-from bs4 import BeautifulSoup
+from urllib.parse import urlparse
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
@@ -146,55 +143,6 @@ def http_request(url):
     return status, headers, body
 
 
-# content rendering
-def render_html(html_text):
-    soup = BeautifulSoup(html_text, "html.parser")
-
-    for tag in soup(["script", "style", "noscript", "header", "footer", "nav"]):
-        tag.decompose()
-
-    text = soup.get_text(separator="\n", strip=True)
-
-    lines = []
-    prev_blank = False
-    for line in text.splitlines():
-        line = line.strip()
-        if not line:
-            if not prev_blank:
-                lines.append("")
-                prev_blank = True
-        else:
-            lines.append(line)
-            prev_blank = False
-
-    return "\n".join(lines)
-
-
-def render_json(json_text):
-    try:
-        data = json.loads(json_text)
-        return json.dumps(data, indent=2, ensure_ascii=False)
-    except json.JSONDecodeError:
-        return json_text
-
-
-def render_response(headers, body):
-    content_type = headers.get("content-type", "")
-    if "application/json" in content_type:
-        print("[Content-Type: JSON]")
-        return render_json(body)
-    elif "text/html" in content_type:
-        return render_html(body)
-    else:
-        try:
-            json.loads(body)
-            return render_json(body)
-        except (json.JSONDecodeError, ValueError):
-            if "<html" in body.lower() or "<body" in body.lower():
-                return render_html(body)
-            return body
-
-
 def cmd_url(url):
     if not url.startswith("http://") and not url.startswith("https://"):
         url = "http://" + url
@@ -208,60 +156,13 @@ def cmd_url(url):
 
     print(f"Status: {status}")
     print("-" * 60)
-    print(render_response(headers, body))
-
-
-# search engine
-def search(term):
-    query = quote_plus(term)
-    url = f"https://html.duckduckgo.com/html/?q={query}"
-
-    status, headers, body = http_request(url)
-    if status == 0:
-        print("Error: Could not reach search engine.")
-        return []
-
-    soup = BeautifulSoup(body, "html.parser")
-    results = []
-
-    for result_div in soup.select(".result"):
-        title_tag = result_div.select_one(".result__a")
-        if not title_tag:
-            continue
-        title = title_tag.get_text(strip=True)
-        href = title_tag.get("href", "")
-
-        if "uddg=" in href:
-            parsed_href = urlparse(href)
-            qs = parse_qs(parsed_href.query)
-            if "uddg" in qs:
-                href = qs["uddg"][0]
-
-        snippet_tag = result_div.select_one(".result__snippet")
-        snippet = snippet_tag.get_text(strip=True) if snippet_tag else ""
-
-        if title and href and href.startswith("http"):
-            results.append((title, href, snippet))
-        if len(results) >= 10:
-            break
-
-    return results
+    print(body)
 
 
 def cmd_search(term):
-    print(f'Searching: "{term}"\n')
-    results = search(term)
-
-    if not results:
-        print("No results found.")
-        return
-
-    for i, (title, url, snippet) in enumerate(results, 1):
-        print(f"{i}. {title}")
-        print(f"   {url}")
-        if snippet:
-            print(f"   {snippet}")
-        print()
+    print(f'Searching: "{term}"')
+    # TODO: implement search
+    print("Not implemented yet.")
 
 
 def main():
