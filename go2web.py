@@ -116,34 +116,50 @@ def parse_response(raw):
     return status_code, headers, body
 
 
-def http_request(url):
-    parsed = urlparse(url)
-    scheme = parsed.scheme or "http"
-    host = parsed.hostname
-    port = parsed.port or (443 if scheme == "https" else 80)
-    path = parsed.path or "/"
-    if parsed.query:
-        path += "?" + parsed.query
+def http_request(url, max_redirects=10):
+    for _ in range(max_redirects):
+        parsed = urlparse(url)
+        scheme = parsed.scheme or "http"
+        host = parsed.hostname
+        port = parsed.port or (443 if scheme == "https" else 80)
+        path = parsed.path or "/"
+        if parsed.query:
+            path += "?" + parsed.query
 
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.settimeout(15)
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.settimeout(15)
 
-    try:
-        sock.connect((host, port))
+        try:
+            sock.connect((host, port))
 
-        if scheme == "https":
-            context = ssl.create_default_context()
-            sock = context.wrap_socket(sock, server_hostname=host)
+            if scheme == "https":
+                context = ssl.create_default_context()
+                sock = context.wrap_socket(sock, server_hostname=host)
 
-        request = build_request(host, path)
-        sock.sendall(request.encode("utf-8"))
+            request = build_request(host, path)
+            sock.sendall(request.encode("utf-8"))
 
-        raw = recv_all(sock)
-    finally:
-        sock.close()
+            raw = recv_all(sock)
+        finally:
+            sock.close()
 
-    status, headers, body = parse_response(raw)
-    return status, headers, body
+        status, headers, body = parse_response(raw)
+
+        # follow redirects
+        if status in (301, 302, 303, 307, 308) and "location" in headers:
+            new_url = headers["location"]
+            if new_url.startswith("/"):
+                new_url = f"{scheme}://{host}{new_url}"
+            elif not new_url.startswith("http"):
+                new_url = f"{scheme}://{host}/{new_url}"
+            print(f"[redirect {status}] -> {new_url}")
+            url = new_url
+            continue
+
+        return status, headers, body
+
+    print("Error: Too many redirects")
+    return 0, {}, ""
 
 
 # content rendering
@@ -262,6 +278,28 @@ def cmd_search(term):
         if snippet:
             print(f"   {snippet}")
         print()
+
+    # interactive link access
+    print("-" * 60)
+    print("Enter a result number to visit the link (or press Enter to exit):")
+    try:
+        choice = input("> ").strip()
+        if choice.isdigit():
+            idx = int(choice) - 1
+            if 0 <= idx < len(results):
+                title, url, snippet = results[idx]
+                print(f"\nFetching: {url}\n")
+                status, headers, body = http_request(url)
+                if status == 0:
+                    print("Error: Could not connect.")
+                else:
+                    print(f"Status: {status}")
+                    print("-" * 60)
+                    print(render_response(headers, body))
+            else:
+                print("Invalid number.")
+    except (EOFError, KeyboardInterrupt):
+        pass
 
 
 def main():
