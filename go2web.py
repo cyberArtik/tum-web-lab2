@@ -4,7 +4,7 @@ import ssl
 import argparse
 import json
 import io
-from urllib.parse import urlparse
+from urllib.parse import urlparse, quote_plus, parse_qs
 
 from bs4 import BeautifulSoup
 
@@ -211,10 +211,57 @@ def cmd_url(url):
     print(render_response(headers, body))
 
 
+# search engine
+def search(term):
+    query = quote_plus(term)
+    url = f"https://html.duckduckgo.com/html/?q={query}"
+
+    status, headers, body = http_request(url)
+    if status == 0:
+        print("Error: Could not reach search engine.")
+        return []
+
+    soup = BeautifulSoup(body, "html.parser")
+    results = []
+
+    for result_div in soup.select(".result"):
+        title_tag = result_div.select_one(".result__a")
+        if not title_tag:
+            continue
+        title = title_tag.get_text(strip=True)
+        href = title_tag.get("href", "")
+
+        if "uddg=" in href:
+            parsed_href = urlparse(href)
+            qs = parse_qs(parsed_href.query)
+            if "uddg" in qs:
+                href = qs["uddg"][0]
+
+        snippet_tag = result_div.select_one(".result__snippet")
+        snippet = snippet_tag.get_text(strip=True) if snippet_tag else ""
+
+        if title and href and href.startswith("http"):
+            results.append((title, href, snippet))
+        if len(results) >= 10:
+            break
+
+    return results
+
+
 def cmd_search(term):
-    print(f'Searching: "{term}"')
-    # TODO: implement search
-    print("Not implemented yet.")
+    print(f'Searching: "{term}"\n')
+    results = search(term)
+
+    if not results:
+        print("No results found.")
+        return
+
+    for i, (title, url, snippet) in enumerate(results, 1):
+        print(f"{i}. {title}")
+        print(f"   {url}")
+        if snippet:
+            print(f"   {snippet}")
+        print()
 
 
 def main():
