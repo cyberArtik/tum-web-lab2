@@ -2,8 +2,11 @@ import sys
 import socket
 import ssl
 import argparse
+import json
 import io
-from urllib.parse import urlparse
+from urllib.parse import urlparse, quote_plus, parse_qs
+
+from bs4 import BeautifulSoup
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
@@ -113,34 +116,99 @@ def parse_response(raw):
     return status_code, headers, body
 
 
-def http_request(url):
-    parsed = urlparse(url)
-    scheme = parsed.scheme or "http"
-    host = parsed.hostname
-    port = parsed.port or (443 if scheme == "https" else 80)
-    path = parsed.path or "/"
-    if parsed.query:
-        path += "?" + parsed.query
+def http_request(url, max_redirects=10):
+    for _ in range(max_redirects):
+        parsed = urlparse(url)
+        scheme = parsed.scheme or "http"
+        host = parsed.hostname
+        port = parsed.port or (443 if scheme == "https" else 80)
+        path = parsed.path or "/"
+        if parsed.query:
+            path += "?" + parsed.query
 
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.settimeout(15)
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.settimeout(15)
 
+        try:
+            sock.connect((host, port))
+
+            if scheme == "https":
+                context = ssl.create_default_context()
+                sock = context.wrap_socket(sock, server_hostname=host)
+
+            request = build_request(host, path)
+            sock.sendall(request.encode("utf-8"))
+
+            raw = recv_all(sock)
+        finally:
+            sock.close()
+
+        status, headers, body = parse_response(raw)
+
+        # follow redirects
+        if status in (301, 302, 303, 307, 308) and "location" in headers:
+            new_url = headers["location"]
+            if new_url.startswith("/"):
+                new_url = f"{scheme}://{host}{new_url}"
+            elif not new_url.startswith("http"):
+                new_url = f"{scheme}://{host}/{new_url}"
+            print(f"[redirect {status}] -> {new_url}")
+            url = new_url
+            continue
+
+        return status, headers, body
+
+    print("Error: Too many redirects")
+    return 0, {}, ""
+
+
+# content rendering
+def render_html(html_text):
+    soup = BeautifulSoup(html_text, "html.parser")
+
+    for tag in soup(["script", "style", "noscript", "header", "footer", "nav"]):
+        tag.decompose()
+
+    text = soup.get_text(separator="\n", strip=True)
+
+    lines = []
+    prev_blank = False
+    for line in text.splitlines():
+        line = line.strip()
+        if not line:
+            if not prev_blank:
+                lines.append("")
+                prev_blank = True
+        else:
+            lines.append(line)
+            prev_blank = False
+
+    return "\n".join(lines)
+
+
+def render_json(json_text):
     try:
-        sock.connect((host, port))
+        data = json.loads(json_text)
+        return json.dumps(data, indent=2, ensure_ascii=False)
+    except json.JSONDecodeError:
+        return json_text
 
-        if scheme == "https":
-            context = ssl.create_default_context()
-            sock = context.wrap_socket(sock, server_hostname=host)
 
-        request = build_request(host, path)
-        sock.sendall(request.encode("utf-8"))
-
-        raw = recv_all(sock)
-    finally:
-        sock.close()
-
-    status, headers, body = parse_response(raw)
-    return status, headers, body
+def render_response(headers, body):
+    content_type = headers.get("content-type", "")
+    if "application/json" in content_type:
+        print("[Content-Type: JSON]")
+        return render_json(body)
+    elif "text/html" in content_type:
+        return render_html(body)
+    else:
+        try:
+            json.loads(body)
+            return render_json(body)
+        except (json.JSONDecodeError, ValueError):
+            if "<html" in body.lower() or "<body" in body.lower():
+                return render_html(body)
+            return body
 
 
 def cmd_url(url):
@@ -156,13 +224,82 @@ def cmd_url(url):
 
     print(f"Status: {status}")
     print("-" * 60)
-    print(body)
+    print(render_response(headers, body))
+
+
+# search engine
+def search(term):
+    query = quote_plus(term)
+    url = f"https://html.duckduckgo.com/html/?q={query}"
+
+    status, headers, body = http_request(url)
+    if status == 0:
+        print("Error: Could not reach search engine.")
+        return []
+
+    soup = BeautifulSoup(body, "html.parser")
+    results = []
+
+    for result_div in soup.select(".result"):
+        title_tag = result_div.select_one(".result__a")
+        if not title_tag:
+            continue
+        title = title_tag.get_text(strip=True)
+        href = title_tag.get("href", "")
+
+        if "uddg=" in href:
+            parsed_href = urlparse(href)
+            qs = parse_qs(parsed_href.query)
+            if "uddg" in qs:
+                href = qs["uddg"][0]
+
+        snippet_tag = result_div.select_one(".result__snippet")
+        snippet = snippet_tag.get_text(strip=True) if snippet_tag else ""
+
+        if title and href and href.startswith("http"):
+            results.append((title, href, snippet))
+        if len(results) >= 10:
+            break
+
+    return results
 
 
 def cmd_search(term):
-    print(f'Searching: "{term}"')
-    # TODO: implement search
-    print("Not implemented yet.")
+    print(f'Searching: "{term}"\n')
+    results = search(term)
+
+    if not results:
+        print("No results found.")
+        return
+
+    for i, (title, url, snippet) in enumerate(results, 1):
+        print(f"{i}. {title}")
+        print(f"   {url}")
+        if snippet:
+            print(f"   {snippet}")
+        print()
+
+    # interactive link access
+    print("-" * 60)
+    print("Enter a result number to visit the link (or press Enter to exit):")
+    try:
+        choice = input("> ").strip()
+        if choice.isdigit():
+            idx = int(choice) - 1
+            if 0 <= idx < len(results):
+                title, url, snippet = results[idx]
+                print(f"\nFetching: {url}\n")
+                status, headers, body = http_request(url)
+                if status == 0:
+                    print("Error: Could not connect.")
+                else:
+                    print(f"Status: {status}")
+                    print("-" * 60)
+                    print(render_response(headers, body))
+            else:
+                print("Invalid number.")
+    except (EOFError, KeyboardInterrupt):
+        pass
 
 
 def main():
