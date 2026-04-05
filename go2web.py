@@ -8,6 +8,8 @@ from urllib.parse import urlparse, quote_plus, parse_qs
 
 from bs4 import BeautifulSoup
 
+from bs4 import BeautifulSoup
+
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
 
@@ -160,6 +162,55 @@ def http_request(url, max_redirects=10):
 
     print("Error: Too many redirects")
     return 0, {}, ""
+
+
+# content rendering
+def render_html(html_text):
+    soup = BeautifulSoup(html_text, "html.parser")
+
+    for tag in soup(["script", "style", "noscript", "header", "footer", "nav"]):
+        tag.decompose()
+
+    text = soup.get_text(separator="\n", strip=True)
+
+    lines = []
+    prev_blank = False
+    for line in text.splitlines():
+        line = line.strip()
+        if not line:
+            if not prev_blank:
+                lines.append("")
+                prev_blank = True
+        else:
+            lines.append(line)
+            prev_blank = False
+
+    return "\n".join(lines)
+
+
+def render_json(json_text):
+    try:
+        data = json.loads(json_text)
+        return json.dumps(data, indent=2, ensure_ascii=False)
+    except json.JSONDecodeError:
+        return json_text
+
+
+def render_response(headers, body):
+    content_type = headers.get("content-type", "")
+    if "application/json" in content_type:
+        print("[Content-Type: JSON]")
+        return render_json(body)
+    elif "text/html" in content_type:
+        return render_html(body)
+    else:
+        try:
+            json.loads(body)
+            return render_json(body)
+        except (json.JSONDecodeError, ValueError):
+            if "<html" in body.lower() or "<body" in body.lower():
+                return render_html(body)
+            return body
 
 
 # content rendering
