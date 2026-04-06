@@ -3,6 +3,9 @@ import socket
 import ssl
 import argparse
 import json
+import os
+import hashlib
+import time
 import io
 from urllib.parse import urlparse, quote_plus, parse_qs
 
@@ -10,6 +13,54 @@ from bs4 import BeautifulSoup
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
+
+# file-based HTTP cache
+CACHE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".go2web_cache")
+
+
+def _cache_key(url):
+    return hashlib.sha256(url.encode()).hexdigest()
+
+
+def cache_get(url):
+    os.makedirs(CACHE_DIR, exist_ok=True)
+    path = os.path.join(CACHE_DIR, _cache_key(url))
+    if not os.path.exists(path):
+        return None
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            entry = json.load(f)
+        max_age = entry.get("max_age", 300)
+        if time.time() - entry["timestamp"] > max_age:
+            os.remove(path)
+            return None
+        return entry["headers"], entry["body"]
+    except Exception:
+        return None
+
+
+def cache_put(url, headers, body):
+    os.makedirs(CACHE_DIR, exist_ok=True)
+    max_age = 300
+    cc = headers.get("cache-control", "")
+    if "no-store" in cc or "no-cache" in cc:
+        return
+    for part in cc.split(","):
+        part = part.strip()
+        if part.startswith("max-age="):
+            try:
+                max_age = int(part.split("=", 1)[1])
+            except ValueError:
+                pass
+    entry = {
+        "timestamp": time.time(),
+        "max_age": max_age,
+        "headers": headers,
+        "body": body,
+    }
+    path = os.path.join(CACHE_DIR, _cache_key(url))
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(entry, f)
 
 
 HELP_TEXT = """go2web (request and search)
@@ -26,12 +77,12 @@ Examples:
 
 
 # raw http over tcp sockets
-def build_request(host, path):
+def build_request(host, path, accept="text/html,application/json;q=0.9,*/*;q=0.8"):
     return (
         f"GET {path} HTTP/1.1\r\n"
         f"Host: {host}\r\n"
         f"User-Agent: go2web/1.0\r\n"
-        f"Accept: text/html\r\n"
+        f"Accept: {accept}\r\n"
         f"Accept-Encoding: identity\r\n"
         f"Connection: close\r\n"
         f"\r\n"
@@ -116,8 +167,15 @@ def parse_response(raw):
     return status_code, headers, body
 
 
-def http_request(url, max_redirects=10):
+def http_request(url, max_redirects=10, use_cache=True):
     for _ in range(max_redirects):
+        # check cache
+        if use_cache:
+            cached = cache_get(url)
+            if cached:
+                print(f"[cache hit] {url}")
+                return 200, cached[0], cached[1]
+
         parsed = urlparse(url)
         scheme = parsed.scheme or "http"
         host = parsed.hostname
@@ -155,6 +213,10 @@ def http_request(url, max_redirects=10):
             print(f"[redirect {status}] -> {new_url}")
             url = new_url
             continue
+
+        # cache successful responses
+        if use_cache and status == 200:
+            cache_put(url, headers, body)
 
         return status, headers, body
 
@@ -232,7 +294,7 @@ def search(term):
     query = quote_plus(term)
     url = f"https://html.duckduckgo.com/html/?q={query}"
 
-    status, headers, body = http_request(url)
+    status, headers, body = http_request(url, use_cache=False)
     if status == 0:
         print("Error: Could not reach search engine.")
         return []
