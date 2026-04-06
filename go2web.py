@@ -3,15 +3,64 @@ import socket
 import ssl
 import argparse
 import json
+import os
+import hashlib
+import time
 import io
 from urllib.parse import urlparse, quote_plus, parse_qs
 
 from bs4 import BeautifulSoup
 
-from bs4 import BeautifulSoup
-
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
+
+# file-based HTTP cache
+CACHE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".go2web_cache")
+
+
+def _cache_key(url):
+    return hashlib.sha256(url.encode()).hexdigest()
+
+
+def cache_get(url):
+    os.makedirs(CACHE_DIR, exist_ok=True)
+    path = os.path.join(CACHE_DIR, _cache_key(url))
+    if not os.path.exists(path):
+        return None
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            entry = json.load(f)
+        max_age = entry.get("max_age", 300)
+        if time.time() - entry["timestamp"] > max_age:
+            os.remove(path)
+            return None
+        return entry["headers"], entry["body"]
+    except Exception:
+        return None
+
+
+def cache_put(url, headers, body):
+    os.makedirs(CACHE_DIR, exist_ok=True)
+    max_age = 300
+    cc = headers.get("cache-control", "")
+    if "no-store" in cc or "no-cache" in cc:
+        return
+    for part in cc.split(","):
+        part = part.strip()
+        if part.startswith("max-age="):
+            try:
+                max_age = int(part.split("=", 1)[1])
+            except ValueError:
+                pass
+    entry = {
+        "timestamp": time.time(),
+        "max_age": max_age,
+        "headers": headers,
+        "body": body,
+    }
+    path = os.path.join(CACHE_DIR, _cache_key(url))
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(entry, f)
 
 
 HELP_TEXT = """go2web (request and search)
@@ -28,12 +77,12 @@ Examples:
 
 
 # raw http over tcp sockets
-def build_request(host, path):
+def build_request(host, path, accept="text/html,application/json;q=0.9,*/*;q=0.8"):
     return (
         f"GET {path} HTTP/1.1\r\n"
         f"Host: {host}\r\n"
         f"User-Agent: go2web/1.0\r\n"
-        f"Accept: text/html\r\n"
+        f"Accept: {accept}\r\n"
         f"Accept-Encoding: identity\r\n"
         f"Connection: close\r\n"
         f"\r\n"
@@ -118,8 +167,15 @@ def parse_response(raw):
     return status_code, headers, body
 
 
-def http_request(url, max_redirects=10):
+def http_request(url, max_redirects=10, use_cache=True):
     for _ in range(max_redirects):
+        # check cache
+        if use_cache:
+            cached = cache_get(url)
+            if cached:
+                print(f"[cache hit] {url}")
+                return 200, cached[0], cached[1]
+
         parsed = urlparse(url)
         scheme = parsed.scheme or "http"
         host = parsed.hostname
@@ -158,59 +214,14 @@ def http_request(url, max_redirects=10):
             url = new_url
             continue
 
+        # cache successful responses
+        if use_cache and status == 200:
+            cache_put(url, headers, body)
+
         return status, headers, body
 
     print("Error: Too many redirects")
     return 0, {}, ""
-
-
-# content rendering
-def render_html(html_text):
-    soup = BeautifulSoup(html_text, "html.parser")
-
-    for tag in soup(["script", "style", "noscript", "header", "footer", "nav"]):
-        tag.decompose()
-
-    text = soup.get_text(separator="\n", strip=True)
-
-    lines = []
-    prev_blank = False
-    for line in text.splitlines():
-        line = line.strip()
-        if not line:
-            if not prev_blank:
-                lines.append("")
-                prev_blank = True
-        else:
-            lines.append(line)
-            prev_blank = False
-
-    return "\n".join(lines)
-
-
-def render_json(json_text):
-    try:
-        data = json.loads(json_text)
-        return json.dumps(data, indent=2, ensure_ascii=False)
-    except json.JSONDecodeError:
-        return json_text
-
-
-def render_response(headers, body):
-    content_type = headers.get("content-type", "")
-    if "application/json" in content_type:
-        print("[Content-Type: JSON]")
-        return render_json(body)
-    elif "text/html" in content_type:
-        return render_html(body)
-    else:
-        try:
-            json.loads(body)
-            return render_json(body)
-        except (json.JSONDecodeError, ValueError):
-            if "<html" in body.lower() or "<body" in body.lower():
-                return render_html(body)
-            return body
 
 
 # content rendering
@@ -283,7 +294,7 @@ def search(term):
     query = quote_plus(term)
     url = f"https://html.duckduckgo.com/html/?q={query}"
 
-    status, headers, body = http_request(url)
+    status, headers, body = http_request(url, use_cache=False)
     if status == 0:
         print("Error: Could not reach search engine.")
         return []
