@@ -1,7 +1,7 @@
 # EuropeTrans — Landing Page
 
 ## About the Client
-
+1
 **Ilico Tatiana** is a professional translator with over **22 years of experience**, accredited by the Embassy of the Republic of Bulgaria in Moldova.
 
 She provides translation services across three languages — **Romanian**, **Bulgarian**, and **Russian** — and works directly with clients without intermediaries, guaranteeing confidentiality, high quality, and on-time delivery.
