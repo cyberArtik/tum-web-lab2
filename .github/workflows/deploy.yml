@@ -27,9 +27,11 @@ jobs:
           node-version: "20"
 
       - name: Install dependencies
+        working-directory: ./lab4
         run: npm install
 
       - name: Build with TinaCMS + Astro
+        working-directory: ./lab4
         env:
           NEXT_PUBLIC_TINA_CLIENT_ID: ${{ secrets.TINA_CLIENT_ID }}
           TINA_TOKEN: ${{ secrets.TINA_TOKEN }}
@@ -38,7 +40,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist
+          path: ./lab4/dist
 
   deploy:
     environment:
